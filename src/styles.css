@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color:rgb(206, 236, 255);}
+mat-card{
+    width:80%;
+    height:fit-content;
+    margin:10%;
+}
+.icon-button-style{
+border-radius: 20%;
+}

@@ -1,0 +1,15 @@
+<mat-grid-list cols="5">
+  <mat-grid-tile *ngFor="let theProduct of theProducts">
+    <mat-card>
+      <mat-card-title>{{theProduct.name}}</mat-card-title>
+      <mat-card-subtitle><strong>({{theProduct.category}})</strong></mat-card-subtitle>
+      <mat-card-content>{{theProduct.id}}</mat-card-content>
+      <mat-card-content><strong>Rs.{{theProduct.price}}</strong></mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-icon-button class="icon-button-style" aria-label="Example icon-button with share icon">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

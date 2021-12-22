@@ -1,0 +1,16 @@
+.login-container
+{
+    max-width: 400px;
+    margin : 60px auto 0;
+    border : 1px solid #8080803f;
+    padding:20px;
+    border-radius: 10%;
+}
+.align-center
+{
+    text-align: center;
+}
+.align-right
+{
+    text-align: right;
+}
