@@ -9,7 +9,6 @@ export class GetProductsService {
 
   httpOptions = {
     headers: new HttpHeaders({ 
-      'Access-Control-Allow-Origin':'*'
     })
   };
   constructor(private httpClient : HttpClient) { 
