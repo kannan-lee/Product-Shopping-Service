@@ -6,8 +6,8 @@
     flex: 1 1 auto;
 }
 .icon-button-style{
-    border-radius: 20%;
     margin-left: 2%;
+    margin-right: 2%;
 }
 mat-toolbar{
     background-color: lightskyblue;

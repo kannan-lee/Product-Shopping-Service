@@ -14,11 +14,13 @@ export class ProductLoginService {
   };
   constructor(private httpClient : HttpClient) { }
 
-  getProduct()
-  {
+  getProduct(){
     let baseUrl ="http://localhost:8088/msg";
     //baseUrl=baseUrl.concat(bugId.toString());
     console.log(baseUrl);
     return this.httpClient.get<Product>(baseUrl,this.httpOptions);
+  }
+  isLoggedIn(){
+    return false;
   }
 }
