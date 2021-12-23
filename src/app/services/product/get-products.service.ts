@@ -17,7 +17,7 @@ export class GetProductsService {
   }
   getProducts()
   {
-    let baseUrl ="http://localhost:8088/basic/products";
+    let baseUrl ="http://localhost:8088/products";
     return this.httpClient.get<Product[]>(baseUrl,this.httpOptions);
   }
   getProduct(id: string) {

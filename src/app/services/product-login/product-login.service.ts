@@ -24,9 +24,8 @@ export class ProductLoginService {
         Authorization:'Basic '+btoa(this.username+':'+this.password)
       })
     };
-    let baseUrl ="http://localhost:8088/basic/products";
+    let baseUrl ="http://localhost:8088/products";
     this.httpClient.get<Product[]>(baseUrl,httpOptions).subscribe(data=>{this.theProducts=data;this.router.navigate(['getall']);});
-    console.log(this.theProducts?.toString());
   }
   getProducts()
   {

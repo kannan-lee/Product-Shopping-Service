@@ -21,7 +21,9 @@ export class GetProductsComponent implements OnInit {
   getProducts()
   {
 
-    this.theProducts=this.getProductsLoginService.getProducts();
-    //this.getProductsService.getProducts().subscribe(data=>{this.theProducts=data});
+    if(this.getProductsLoginService.getProducts()==undefined)
+      this.getProductsService.getProducts().subscribe(data=>{this.theProducts=data});
+    else
+      this.theProducts=this.getProductsLoginService.getProducts();
   }
 }
