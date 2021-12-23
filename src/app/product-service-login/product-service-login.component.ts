@@ -16,14 +16,9 @@ export class ProductServiceLoginComponent implements OnInit {
     username: ['', Validators.required],
     password: ['', Validators.required]
 });
-    loading = false;
-    submitted = false;
-    returnUrl: string ="";
 
     constructor(
         private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
         private productLoginService: ProductLoginService
     ) {
         // redirect to home if already logged in
@@ -33,32 +28,10 @@ export class ProductServiceLoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-        });
-        this.productLoginService.getProduct().subscribe(
-            data=>{this.msg=data}
-          )
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
-
     onSubmit() {
-        this.submitted = true;
-
-        // reset alerts on submit
-        //this.alertService.clear();
-
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-       this.loading = true;
+        this.productLoginService.getLoginCredential(this.loginForm.get('username')?.value,this.loginForm.get('password')?.value)
     } 
 
 }

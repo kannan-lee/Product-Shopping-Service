@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material.module';
+import { GetProductsService } from './services/product/get-products.service';
+import { ProductLoginService } from './services/product-login/product-login.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +32,10 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    GetProductsService,
+    ProductLoginService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
