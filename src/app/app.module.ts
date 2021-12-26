@@ -14,7 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material.module';
 import { HomeComponent } from './home/home.component';
-import { AuthHeaderInterceptor } from './common/auth-guard/auth-header.interceptor';
+import { AuthHeaderInterceptor, DEFAULT_TIMEOUT } from './common/auth-guard/auth-header.interceptor';
 import { CallbackComponent } from './callback/callback.component';
 @NgModule({
   declarations: [

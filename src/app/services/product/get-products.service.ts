@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GlobalConstants } from 'src/app/common/consts/global-constants';
 import { Product } from 'src/app/common/product/product';
 
 @Injectable({
@@ -7,20 +8,16 @@ import { Product } from 'src/app/common/product/product';
 })
 export class GetProductsService {
 
-  httpOptions = {
-    headers: new HttpHeaders({ 
-    })
-  };
   constructor(private httpClient : HttpClient) { 
 
   }
   getProducts()
   {
-    let baseUrl ="http://localhost:8088/products";
-    return this.httpClient.get<Product[]>(baseUrl,this.httpOptions);
+    let getAllUrl =GlobalConstants.API_URL+"products";
+    return this.httpClient.get<Product[]>(getAllUrl);
   }
   getProduct(id: string) {
-    let baseUrl ="http://localhost:8088/products/"+id;
-    return this.httpClient.get<Product>(baseUrl,this.httpOptions);
+    let baseUrl =GlobalConstants.API_URL+"products/"+id;
+    return this.httpClient.get<Product>(baseUrl);
   }
 }
