@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +13,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material.module';
+import { HomeComponent } from './home/home.component';
+import { AuthHeaderInterceptor } from './common/auth-guard/auth-header.interceptor';
+import { CallbackComponent } from './callback/callback.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +23,9 @@ import { MaterialModule } from './material.module';
     GetProductComponent,
     GetProductsComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    HomeComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +35,13 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    [{
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthHeaderInterceptor,
+      multi:true
+    }],[{ provide: DEFAULT_TIMEOUT, useValue: 30000 }]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
