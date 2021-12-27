@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../common/auth-guard/user.service';
 import { Product } from '../common/product/product';
 import { GetProductsService } from '../services/product/get-products.service';
 
@@ -11,7 +12,8 @@ export class GetProductsComponent implements OnInit {
 
   theProducts : Product[] | undefined;
   theProduct : Product = new Product();
-  constructor(private getProductsService : GetProductsService) { }
+  content:string |undefined;
+  constructor(private userService : UserService) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -19,6 +21,13 @@ export class GetProductsComponent implements OnInit {
   getProducts()
   {
     
-    this.getProductsService.getProducts().subscribe(data=>{this.theProducts=data});
+    this.userService.getPublicContent().subscribe(
+      data => {
+        this.theProducts = data;
+      },
+      err => {
+        this.content = JSON.parse(err.error).message;
+      }
+    );
   }
 }

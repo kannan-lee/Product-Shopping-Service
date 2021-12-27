@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/consts/global-constants';
 
 const TOKEN_KEY = 'auth-token';
+const USER_KEY = 'auth-user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +16,21 @@ export class TokenStorageService {
     window.sessionStorage.clear();
   }
 
-  public saveToken(token: string): void {
-    console.log(token);
+  public saveToken(token: string){
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
-  public getToken(){
-    console.log('hello');
-    return window.sessionStorage.getItem(TOKEN_KEY);
-  }
-  public fetchToken(code:string,state : string) : Observable<any>{
-    return this.httpClient.get(GlobalConstants.GITHUB_TOKEN_ENDPOINT_URL+"?code="+code+"&state="+state);
+  public getToken() {
+    return sessionStorage.getItem(TOKEN_KEY);
   }
 
+  public saveUser(user : any) {
+    window.sessionStorage.removeItem(USER_KEY);
+    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  public getUser(): any {
+    return JSON.parse(sessionStorage.getItem(USER_KEY)+"");
+  }
 }
