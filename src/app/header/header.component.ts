@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   product= new FormGroup({
   id : new FormControl('',Validators.required)
   });
-  constructor(private router:Router,private productLoginService : ProductLoginService,private tokenStore : TokenStorageService) { }
+  constructor(private router:Router,private productLoginService : ProductLoginService) { }
   isLoggedIn :boolean =false;
   ngOnInit(): void {
     this.isLoggedIn=this.productLoginService.isLoggedIn();
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   });   
   }
   logout(){
-    this.tokenStore.signOut();
+    this.productLoginService.signOut();
     this.router.navigate(['']);
     window.location.reload();
   }

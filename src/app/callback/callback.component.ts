@@ -11,14 +11,14 @@ import { TokenStorageService } from '../services/token-storage/token-storage.ser
 })
 export class CallbackComponent implements OnInit {
 
-  constructor(private route : ActivatedRoute, private router : Router,private tokenStorage : TokenStorageService) { }
+  constructor(private route : ActivatedRoute, private router : Router,private productLoginService : ProductLoginService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(p=>{
-      this.tokenStorage.fetchToken(p['code'],p['state']).subscribe(data=>{
-          this.tokenStorage.saveToken(p['token']);          
+      this.productLoginService.fetchToken(p['code'],p['state']).subscribe(data=>{
+          this.productLoginService.saveToken(p['token']);          
           this.router.navigate(['getall']);
-          window.location.reload();
+          //window.location.reload();
       })
     })
   }

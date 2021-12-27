@@ -14,14 +14,12 @@ export const DEFAULT_TIMEOUT = new InjectionToken<number>('defaultTimeout');
 @Injectable()
 export class AuthHeaderInterceptor implements HttpInterceptor {
 
-  constructor(private productLoginService : ProductLoginService,private tokenStorage : TokenStorageService) {}
+  constructor(private productLoginService : ProductLoginService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const req = request.clone({
       setHeaders:{
-        'Content-Type' : 'application/json',
-        Accept : 'application/json',
-        Authorization : 'Bearer '+ this.tokenStorage.getToken()
+        Authorization : 'Bearer '+ this.productLoginService.getToken()
       }
     });
     return next.handle(req);
