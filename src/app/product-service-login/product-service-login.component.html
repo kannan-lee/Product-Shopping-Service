@@ -10,13 +10,12 @@
             <input type="password" formControlName="password" class="form-control " />
         </div>
         <div class="form-group align-right">
-            <button [disabled]="loading" class="btn btn-primary">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                Login
+            <button  class="btn btn-primary">
+                    Login
             </button>
         </div>
     </form>
     <a href="{{ githubURL }}">
-        <img alt="Login with Github" src="/assets/img/github.png" class="btn-img">
+        <img width="20px" height="20px" src="/assets/img/github.png" class="btn-img">Login with Github
     </a>
 </div>

@@ -10,7 +10,7 @@ import { LoginService } from '../services/product-login/login.service';
 })
 export class HeaderComponent implements OnInit {
 
-  isLoggedIn : boolean | undefined;
+  isLoggedIn : boolean =false;
   product= new FormGroup({
   id : new FormControl('',Validators.required)
   });

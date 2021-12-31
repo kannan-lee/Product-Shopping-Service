@@ -13,17 +13,15 @@ import { TokenStorageService } from '../services/token/token-storage.service';
 })
 export class ProductServiceLoginComponent implements OnInit {
 
-    isLoggedIn = false;
-    isLoginFailed = false;
-    errorMessage = '';
+    errorMessage = 'values';
     currentUser: any;
+    isLoginFailed=false;
     githubURL = AppConstants.GITHUB_AUTH_URL;
     msg : Product | undefined;
     loginForm: FormGroup =this.formBuilder.group({
     username: ['', Validators.required],
     password: ['', Validators.required]
 });
-    loading = false;
     submitted = false;
     returnUrl: string ="";
 
@@ -39,11 +37,10 @@ export class ProductServiceLoginComponent implements OnInit {
     ngOnInit() {
         const token = this.route.snapshot.queryParamMap.get('token');
         const error = this.route.snapshot.queryParamMap.get('error');
-        alert(this.tokenStorage.getToken()+":"+token);
           if (this.tokenStorage.getToken()) {
-          this.isLoggedIn = true;
-          console.log(token);
-          this.router.navigate(["/getall"]);
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(["/getall"]);
+          });
         }
           else if(token){
               this.tokenStorage.saveToken(token);
@@ -52,13 +49,13 @@ export class ProductServiceLoginComponent implements OnInit {
                       this.login(data);
                     },
                     err => {
-                      this.errorMessage = err.error.message;
+                      this.errorMessage = err['error']['message']+"hello world";
                       this.isLoginFailed = true;
                     }
                 );
           }
-          else if(error){
-              this.errorMessage = error;
+          else{
+              this.errorMessage = "error : "+(error==null?"unable to process please login again":error+"");
             this.isLoginFailed = true;
           }
     }
@@ -67,9 +64,9 @@ export class ProductServiceLoginComponent implements OnInit {
     } 
     login(user : any): void {
         this.tokenStorage.saveUser(user);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
         this.currentUser = this.tokenStorage.getUser();
-        this.router.navigate(["/getall"]);
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(["/getall"]);
+      });
       }
 }
