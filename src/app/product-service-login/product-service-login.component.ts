@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppConstants } from '../common/app.constants';
 import { Product } from '../common/product/product';
-import { ProductLoginService } from '../services/product-login/product-login.service';
+import { LoginService } from '../services/product-login/login.service';
+import { TokenStorageService } from '../services/token/token-storage.service';
 
 @Component({
   selector: 'app-product-service-login',
@@ -10,7 +12,12 @@ import { ProductLoginService } from '../services/product-login/product-login.ser
   styleUrls: ['./product-service-login.component.css']
 })
 export class ProductServiceLoginComponent implements OnInit {
-  
+
+    isLoggedIn = false;
+    isLoginFailed = false;
+    errorMessage = '';
+    currentUser: any;
+    githubURL = AppConstants.GITHUB_AUTH_URL;
     msg : Product | undefined;
     loginForm: FormGroup =this.formBuilder.group({
     username: ['', Validators.required],
@@ -24,41 +31,45 @@ export class ProductServiceLoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private productLoginService: ProductLoginService
+        private loginService: LoginService,
+        private tokenStorage : TokenStorageService 
     ) {
-        // redirect to home if already logged in
-/*         if (this.productLoginService.currentUserValue) {
-            this.router.navigate(['/']);
-        } */
     }
 
     ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-        });
-        this.productLoginService.getProduct().subscribe(
-            data=>{this.msg=data}
-          )
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        const token = this.route.snapshot.queryParamMap.get('token');
+        const error = this.route.snapshot.queryParamMap.get('error');
+        alert(this.tokenStorage.getToken()+":"+token);
+          if (this.tokenStorage.getToken()) {
+          this.isLoggedIn = true;
+          console.log(token);
+          this.router.navigate(["/getall"]);
+        }
+          else if(token){
+              this.tokenStorage.saveToken(token);
+              this.loginService.getCurrentUser().subscribe(
+                    data => {
+                      this.login(data);
+                    },
+                    err => {
+                      this.errorMessage = err.error.message;
+                      this.isLoginFailed = true;
+                    }
+                );
+          }
+          else if(error){
+              this.errorMessage = error;
+            this.isLoginFailed = true;
+          }
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
-
     onSubmit() {
-        this.submitted = true;
-
-        // reset alerts on submit
-        //this.alertService.clear();
-
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-       this.loading = true;
     } 
-
+    login(user : any): void {
+        this.tokenStorage.saveUser(user);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.currentUser = this.tokenStorage.getUser();
+        this.router.navigate(["/getall"]);
+      }
 }

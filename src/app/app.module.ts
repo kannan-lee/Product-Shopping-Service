@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material.module';
+import { authInterceptorProviders } from './common/_helper/auth.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,7 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
